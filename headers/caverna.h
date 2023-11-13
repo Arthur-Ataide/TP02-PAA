@@ -1,5 +1,6 @@
 #include "./progDinamica.h"
 
+typedef struct TipoCaverna* PCaverna;
 typedef struct TipoCaverna{
     unsigned int tamI, tamJ;
     char **Matrix;
@@ -7,12 +8,14 @@ typedef struct TipoCaverna{
     PCaminho caminhosPossiveis;
 }TipoCaverna;
 
-TipoCaverna* generateCaverna(FILE* f);
+void teste();
 
-TipoCaverna* generateCavernaAleatoria();
+PCaverna geradorCaverna(FILE* f);
 
-void showCaverna(TipoCaverna* caverna);
+PCaverna generateCavernaAleatoria();
 
-void printAtributos(TipoCaverna* caverna);
+void showCaverna(PCaverna caverna);
 
-void freeCaverna(TipoCaverna* caverna);
+void printAtributos(PCaverna caverna);
+
+void freeCaverna(PCaverna caverna);

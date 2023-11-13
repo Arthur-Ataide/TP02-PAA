@@ -12,8 +12,6 @@
 #define limparTela() clear();
 #define pausarTela() printf("\nPress any key to continue..."); limparInput(); getchar();
 
-
-
 #endif
 
 #define pausarLimparTela() pausarTela(); limparTela();

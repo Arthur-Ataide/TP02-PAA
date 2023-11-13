@@ -6,16 +6,16 @@ void lerArquivo(FILE** f){
     char ch[2];
     
     do{
-        printf("\nDigite o caminho do arquivo: (apenas o numero do mapa)\n");
+        printf("\nDigite o caminho do arquivo: (apenas o numero da caverna)\n");
 
-        strcpy(file_path, "./mapGenerator/");
-        strcat(file_path, "map");
+        strcpy(file_path, "./cavernaGeradora/");
+        strcat(file_path, "caverna");
 
         scanf("%s", ch);
         
         strcat(file_path, ch);
         strcat(file_path, ".txt");
-
+        
         printf("\nArquivo: %s\n", file_path);
 
         *f = fopen(file_path, "r");
@@ -48,7 +48,9 @@ void menu(){
 
         // printar menu
 
-        // printf("\n1 - Ler arquivo e gerar mapa\n2 - Gerar mapa aleatorio\n3 - Printar atributos do mapa\n4 - Printar mapa\n5 - Achar o menor caminho\n6 - Tentar achar algum caminho possivel sozinho\n0 - Sair\n");
+        printf("\n1 - Ler arquivo e gerar mapa\n2 - Gerar mapa aleatorio\n3 - Printar atributos do mapa\n4 - Printar mapa\n5 - Achar o menor caminho\n
+        /* 6 - Tentar achar algum caminho possivel sozinho*/\n
+        0 - Sair\n");
         
         scanf("%d", opcao);
         limparTela();

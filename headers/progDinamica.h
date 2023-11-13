@@ -9,4 +9,4 @@ typedef struct TipoCaminho{
 
 } TipoCaminho;
 
-PCaminho procurarCaminho(char** matrix, &caminhosJaVistos);
+PCaminho procurarCaminho(char** matrix,int &caminhosJaVistos);
