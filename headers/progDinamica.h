@@ -1,5 +1,10 @@
 #include "./include.h"
 
+typedef struct TipoParOrdenado{
+    int X;
+    int Y;
+} TipoParOrdenado;
+
 typedef struct TipoCaminho* PCaminho;
 typedef struct TipoCaminho{
 
@@ -9,4 +14,4 @@ typedef struct TipoCaminho{
 
 } TipoCaminho;
 
-PCaminho procurarCaminho(char** matrix,int &caminhosJaVistos);
+PCaminho procurarCaminho(int** matrix);

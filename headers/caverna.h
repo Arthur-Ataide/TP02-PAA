@@ -2,20 +2,33 @@
 
 typedef struct TipoCaverna* PCaverna;
 typedef struct TipoCaverna{
-    unsigned int tamI, tamJ;
-    char **Matrix;
-    char **MatrixMovimento;
+    TipoParOrdenado tam;
+    unsigned int vida;
+    TipoParOrdenado entrada;
+    TipoParOrdenado saida;
+    int** Matrix;
+    char** MatrixMovimento;
     PCaminho caminhosPossiveis;
 }TipoCaverna;
 
 void teste();
 
+void mostrarAtributos(PCaverna caverna);
+
+void linha(int tam, bool poder);
+
+void coluna(int tam, bool poder);
+
+void grafico(char identificador, char bloco);
+
+void mostrarCaverna(PCaverna caverna);
+
+void atributos(FILE *f, PCaverna caverna);
+
 PCaverna geradorCaverna(FILE* f);
 
-PCaverna generateCavernaAleatoria();
-
-void showCaverna(PCaverna caverna);
+PCaverna geradorCavernaAleatoria();
 
 void printAtributos(PCaverna caverna);
 
-void freeCaverna(PCaverna caverna);
+void limparCaverna(PCaverna caverna);

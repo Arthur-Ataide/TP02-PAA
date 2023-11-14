@@ -37,7 +37,7 @@ void lerArquivo(FILE** f){
 void menu(){
 
     FILE* f;
-    TipoCaverna* caverna;
+    PCaverna caverna;
     // TipoRecursividade rec;
 
     int opcao = -1;
@@ -48,11 +48,9 @@ void menu(){
 
         // printar menu
 
-        printf("\n1 - Ler arquivo e gerar mapa\n2 - Gerar mapa aleatorio\n3 - Printar atributos do mapa\n4 - Printar mapa\n5 - Achar o menor caminho\n
-        /* 6 - Tentar achar algum caminho possivel sozinho*/\n
-        0 - Sair\n");
+        printf("\n1 - Ler arquivo e gerar mapa\n2 - Gerar mapa aleatorio\n3 - Printar atributos do mapa\n4 - Printar mapa\n5 - Achar o menor caminho\n/* 6 - Tentar achar algum caminho possivel sozinho*/\n0 - Sair\n");
         
-        scanf("%d", opcao);
+        scanf("%d", &opcao);
         limparTela();
 
         switch (opcao){
@@ -62,11 +60,11 @@ void menu(){
                 //     freeCaminhos(map->caminhosPossiveis->proxCaminho);
 
                 if (cavernaCriada)
-                    freeCaverna(caverna);
+                    limparCaverna(caverna);
                 
                 lerArquivo(&f);
 
-                caverna = generateCaverna(f);
+                caverna = geradorCaverna(f);
                 // generateRec(&rec);
 
                 fclose(f);
@@ -75,39 +73,39 @@ void menu(){
                 caminhosJaVistos = 0;
                 break;
             
-            case 2:
-                limparInput();
+            // case 2:
+            //     limparInput();
                 
-                // if (caminhosJaVistos)
-                //     freeCaminhos(map->caminhosPossiveis->proxCaminho);
+            //     // if (caminhosJaVistos)
+            //     //     freeCaminhos(map->caminhosPossiveis->proxCaminho);
 
-                if (cavernaCriada)
-                    freeCaverna(caverna);
+            //     if (cavernaCriada)
+            //         freeCaverna(caverna);
         
-                caverna = generateCavernaAleatorio();
-                // generateRec(&rec);
-                // printf("\nMapa aleatorio foi gerado, para ver seus atributos selecione 3\n");
-                cavernaCriada = 1;
-                caminhosJaVistos = 0;
-                break;
+            //     caverna = generateCavernaAleatoria();
+            //     // generateRec(&rec);
+            //     // printf("\nMapa aleatorio foi gerado, para ver seus atributos selecione 3\n");
+            //     cavernaCriada = 1;
+            //     caminhosJaVistos = 0;
+            //     break;
 
             case 3:
                 if(cavernaCriada){
-                    printAtributos(caverna);
+                    mostrarAtributos(caverna);
                     break;
                 }
 
             case 4:
                 if(cavernaCriada){
-                    showCaverna(caverna);
+                    mostrarCaverna(caverna);
                     break;
                 }
 
-            case 5:
-                if(cavernaCriada){
-                    procurarCaminho(caverna, &caminhosJaVistos);
-                    break;
-                }
+            // case 5:
+            //     if(cavernaCriada){
+            //         procurarCaminho(caverna->Matrix);
+            //         break;
+            //     }
 
             // case 6:
             //     if(mapCriado){
@@ -124,7 +122,7 @@ void menu(){
                 //     freeCaminhos(map->caminhosPossiveis->proxCaminho);
 
                 if (cavernaCriada)
-                    freeCaverna(caverna);
+                    limparCaverna(caverna);
                 
                 // endwin();
 
