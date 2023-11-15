@@ -1,11 +1,5 @@
 #include "../headers/caverna.h"
 
-void teste(){ // so para testar onde esta o erro
-    // printw("\n\nteste\n\n");
-    printf("\n\nteste\n\n");
-    // refresh();
-}
-
 void mostrarAtributos(PCaverna caverna){
     puts("\nAtributos da caverna:");
     printf("Tamanho: %d %d\n", caverna->tam.X, caverna->tam.Y);
@@ -16,13 +10,8 @@ void mostrarAtributos(PCaverna caverna){
 }
 
 void linha(int tam, bool poder){
-    // if (poder)
-    //     color(7);
-    // else
-    //     color(1);
 
     for (int i = 0; i < 2*(tam)+2; i++) {
-        // printw("  ");
 
         if (poder){
             printf("\033[46m  \033[0m");
@@ -30,40 +19,18 @@ void linha(int tam, bool poder){
         else
             printf("\033[41m  \033[0m");
         
-        // refresh();
     }
-    // if (poder)
-    //     exitColor(7);
-    // else  
-    //     exitColor(1);
 
-    // printw("\n");
     puts("");
-    // refresh();
 }
 
 void coluna(int tam, bool poder){
-
-    // if (poder)
-    //     color(7);
-    // else
-    //     color(1);
-
-    // printw("  ");
     
     if (poder){
         printf("\033[46m  \033[0m");
     }
     else 
         printf("\033[41m  \033[0m");
-
-    // exitColor(7);
-    // refresh();
-
-    // if (poder)
-    //     exitColor(7);
-    // else  
-    //     exitColor(1);
 
 }
 
@@ -94,25 +61,25 @@ void grafico(char identificador, char bloco){
 void mostrarCaverna(PCaverna caverna){
     bool poder = false;
     
-    linha(caverna->tam.Y, poder);
+    linha(caverna->tam.coluna, poder);
 
     for(int i = 0; i < caverna->tam.X; i++) {
         for (int c = 0; c < 2; c++){
-            for(int j = 0; j < caverna->tam.Y; j++){
+            for(int j = 0; j < caverna->tam.coluna; j++){
                 if (j == 0) {
-                    coluna(caverna->tam.Y, poder);
+                    coluna(caverna->tam.coluna, poder);
                 }
 
                 // if (movimento)
                 //     grafic(caverna->MatrixMovimento[i][j]);
                 
                 // else 
-                    if (caverna->entrada.X == i && caverna->entrada.Y == j){
+                    if (caverna->entrada.X == i && caverna->entrada.coluna == j){
                         grafico('I', caverna->Matrix[i][j]);
                         grafico('I', caverna->Matrix[i][j]);
                     }
                     
-                    else if (caverna->saida.X == i && caverna->saida.Y == j){
+                    else if (caverna->saida.X == i && caverna->saida.coluna == j){
                         grafico('F', caverna->Matrix[i][j]);
                         grafico('F', caverna->Matrix[i][j]);
                     }
@@ -122,21 +89,18 @@ void mostrarCaverna(PCaverna caverna){
                         grafico('N',caverna->Matrix[i][j]);
                     }
                 
-                // refresh();
 
 
-                if (j == caverna->tam.Y - 1) {
-                    coluna(caverna->tam.Y, poder);
+                if (j == caverna->tam.coluna - 1) {
+                    coluna(caverna->tam.coluna, poder);
                 }
             }
-            // printw("\n");
             puts("");
-            // refresh();
         }
     }
 
     
-    linha(caverna->tam.Y, poder); 
+    linha(caverna->tam.coluna, poder); 
 
 }
 
@@ -157,10 +121,17 @@ PCaverna geradorCaverna(FILE* f){
     atributos(f, caverna);
 
     caverna->Matrix = (int**) malloc(sizeof(int*) * caverna->tam.X);
+    caverna->MatrixDinamica = (int**) malloc(sizeof(int*) * caverna->tam.X);
+    caverna->MatrixVisitados = (bool**) malloc(sizeof(bool*) * caverna->tam.X);
 
-    for(int i = 0; i < caverna->tam.X; i++)
+    for(int i = 0; i < caverna->tam.X; i++){
         caverna->Matrix[i] = (int*) malloc(sizeof(int) * caverna->tam.Y);
-    
+        caverna->MatrixDinamica[i] = (int*) malloc(sizeof(int) * caverna->tam.Y);
+        caverna->MatrixVisitados[i] = (bool*) malloc(sizeof(bool) * caverna->tam.Y);
+    }
+
+    memset(caverna->MatrixVisitados, false, sizeof(caverna->MatrixVisitados));
+
     for(int i = 0; i < caverna->tam.X; i++){
         for(int j = 0; j < caverna->tam.Y; j++){
             

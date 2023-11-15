@@ -1,17 +1,12 @@
-#include "./include.h"
+#include "./caverna.h"
 
-typedef struct TipoParOrdenado{
-    int X;
-    int Y;
-} TipoParOrdenado;
+typedef struct PilhaParOrdenado* PPilhaParOrdenado;
+typedef struct PilhaParOrdenado{
+    PParOrdenado pilha;
+} PilhaParOrdenado;
 
-typedef struct TipoCaminho* PCaminho;
-typedef struct TipoCaminho{
+void teste();
 
-    int ** vetCaminho;
-    int tamanho;
-    PCaminho proxCaminho;
+void verificaPosicaoInicialFinal(PCaverna caverna);
 
-} TipoCaminho;
-
-PCaminho procurarCaminho(int** matrix);
+void programacaoDinamica(PCaverna caverna);

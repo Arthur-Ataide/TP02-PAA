@@ -1,4 +1,11 @@
-#include "./progDinamica.h"
+#include "./include.h"
+
+
+typedef struct TipoParOrdenado* PParOrdenado;
+typedef struct TipoParOrdenado{
+    int linha;
+    int coluna;
+} TipoParOrdenado;
 
 typedef struct TipoCaverna* PCaverna;
 typedef struct TipoCaverna{
@@ -7,11 +14,9 @@ typedef struct TipoCaverna{
     TipoParOrdenado entrada;
     TipoParOrdenado saida;
     int** Matrix;
-    char** MatrixMovimento;
-    PCaminho caminhosPossiveis;
+    int** MatrixDinamica;
+    bool** MatrixVisitados;
 }TipoCaverna;
-
-void teste();
 
 void mostrarAtributos(PCaverna caverna);
 

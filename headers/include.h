@@ -17,4 +17,3 @@
 #endif
 
 #define pausarLimparTela() pausarTela(); limparTela();
-
