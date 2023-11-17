@@ -28,6 +28,8 @@ void grafico(char identificador, char bloco);
 
 void mostrarCaverna(PCaverna caverna);
 
+void mostrarMatrix(PCaverna caverna);
+
 void atributos(FILE *f, PCaverna caverna);
 
 PCaverna geradorCaverna(FILE* f);

@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
 
 #if defined(__MINGW32__) || defined(_MSC_VER)
 #define limparInput() fflush(stdin)

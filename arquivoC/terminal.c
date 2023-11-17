@@ -5,7 +5,7 @@ void lerSelecao(int Selecao[10], int* quantidadeCavernas){
     char ch[2];
     *quantidadeCavernas = 0;
 
-    FILE* f = fopen("./selecaoDeCavernas/selecao1.txt", "r");
+    FILE* f = fopen("./selecaoDeCavernas/selecao.txt", "r");
     
     if (f == NULL) {
         perror("Erro ao abrir o arquivo");
@@ -60,43 +60,43 @@ void abrirCaverna(FILE** f, int numCaverna){
 void menu(){
 
     FILE* fileCaverna;
-    PCaverna caverna;
-    PilhaParOrdenado caminho;
+    TipoProgDinamica programa;
     int Selecao[10];
     int quantidadeCavernas = 0;
     bool cavernaCriada = false;
-    int caminhosJaVistos = 0;
 
     lerSelecao(Selecao, &quantidadeCavernas);
 
     for (int i = 0; i < quantidadeCavernas; i++){
-
-        if (cavernaCriada)
-            limparCaverna(caverna);
                 
         abrirCaverna(&fileCaverna, Selecao[i]);
 
-        caverna = geradorCaverna(fileCaverna);
-        caminho.pilha = (PParOrdenado) malloc(sizeof(TipoParOrdenado) * ((caverna->entrada.linha - caverna->saida.linha) + (caverna->entrada.coluna - caverna->saida.coluna)));
-        // generateRec(&rec);
+        programa.caverna = geradorCaverna(fileCaverna);
 
         fclose(fileCaverna);
-        
-        cavernaCriada = true;
-        caminhosJaVistos = 0;
 
-        if(cavernaCriada){
-            mostrarCaverna(caverna);
+        programa.vetParOrdenado = criarVetorParOrdenado(programa.caverna);
+
+        cavernaCriada = true;
+
+        if(verificaPosicaoInicialFinal(programa.caverna)){
+            programacaoDinamica(programa.caverna);
+            mostrarMatrix(programa.caverna);
+            limparCaverna(programa.caverna);
+
         }
 
-        pausarLimparTela();
+        else{
+            printf("\nNao existe caminho possivel\n");
+        }
+
+        // pausarLimparTela();
 
     }
 
-    if (cavernaCriada)
-        limparCaverna(caverna);
+    
         
-    exit(0);
+    // exit(0);
     
 
     // while (opcao){

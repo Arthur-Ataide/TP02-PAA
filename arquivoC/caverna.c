@@ -2,10 +2,10 @@
 
 void mostrarAtributos(PCaverna caverna){
     puts("\nAtributos da caverna:");
-    printf("Tamanho: %d %d\n", caverna->tam.X, caverna->tam.Y);
+    printf("Tamanho: %d %d\n", caverna->tam.linha, caverna->tam.coluna);
     printf("Vida: %d\n", caverna->vida);
-    printf("Entrada: %d %d\n", caverna->entrada.X, caverna->entrada.Y);
-    printf("Saida: %d %d\n", caverna->saida.X, caverna->saida.Y);
+    printf("Entrada: %d %d\n", caverna->entrada.linha, caverna->entrada.coluna);
+    printf("Saida: %d %d\n", caverna->saida.linha, caverna->saida.coluna);
     puts("\n");
 }
 
@@ -63,7 +63,7 @@ void mostrarCaverna(PCaverna caverna){
     
     linha(caverna->tam.coluna, poder);
 
-    for(int i = 0; i < caverna->tam.X; i++) {
+    for(int i = 0; i < caverna->tam.linha; i++) {
         for (int c = 0; c < 2; c++){
             for(int j = 0; j < caverna->tam.coluna; j++){
                 if (j == 0) {
@@ -74,12 +74,12 @@ void mostrarCaverna(PCaverna caverna){
                 //     grafic(caverna->MatrixMovimento[i][j]);
                 
                 // else 
-                    if (caverna->entrada.X == i && caverna->entrada.coluna == j){
+                    if (caverna->entrada.linha == i && caverna->entrada.coluna == j){
                         grafico('I', caverna->Matrix[i][j]);
                         grafico('I', caverna->Matrix[i][j]);
                     }
                     
-                    else if (caverna->saida.X == i && caverna->saida.coluna == j){
+                    else if (caverna->saida.linha == i && caverna->saida.coluna == j){
                         grafico('F', caverna->Matrix[i][j]);
                         grafico('F', caverna->Matrix[i][j]);
                     }
@@ -104,8 +104,32 @@ void mostrarCaverna(PCaverna caverna){
 
 }
 
+void mostrarMatrix(PCaverna caverna){
+    puts("\nMatrix Dinamica");
+    for(int i = 0; i < caverna->tam.linha; i++){
+        for(int j = 0; j < caverna->tam.coluna; j++){
+            printf("%d ", caverna->MatrixDinamica[i][j]);
+        }
+        puts("");
+    }
+    
+    puts("\n");
+    
+    puts("\nMatrix Visitados");
+    
+    for(int i = 0; i < caverna->tam.linha; i++){
+        for(int j = 0; j < caverna->tam.coluna; j++){
+            if(caverna->MatrixVisitados[i][j])
+                printf("1 ");
+            else
+                printf("0 ");
+        }
+        puts("");
+    }
+}
+
 void atributos(FILE *f, PCaverna caverna){
-    fscanf(f, "%d %d", &(caverna->tam.X), &(caverna->tam.Y));
+    fscanf(f, "%d %d", &(caverna->tam.linha), &(caverna->tam.coluna));
     fscanf(f, "%d", &(caverna->vida));
 }
 
@@ -114,26 +138,45 @@ PCaverna geradorCaverna(FILE* f){
     char readChar;
 
     PCaverna caverna = (PCaverna) malloc(sizeof(TipoCaverna));
-    caverna->caminhosPossiveis = malloc(sizeof(TipoCaminho));
-    caverna->caminhosPossiveis->proxCaminho = NULL;
-    caverna->caminhosPossiveis->tamanho = 0;
+
 
     atributos(f, caverna);
 
-    caverna->Matrix = (int**) malloc(sizeof(int*) * caverna->tam.X);
-    caverna->MatrixDinamica = (int**) malloc(sizeof(int*) * caverna->tam.X);
-    caverna->MatrixVisitados = (bool**) malloc(sizeof(bool*) * caverna->tam.X);
+    caverna->Matrix = (int**) malloc(sizeof(int*) * caverna->tam.linha);
+    caverna->MatrixDinamica = (int**) malloc(sizeof(int*) * caverna->tam.linha);
+    caverna->MatrixVisitados = (bool**) malloc(sizeof(bool*) * caverna->tam.linha);
 
-    for(int i = 0; i < caverna->tam.X; i++){
-        caverna->Matrix[i] = (int*) malloc(sizeof(int) * caverna->tam.Y);
-        caverna->MatrixDinamica[i] = (int*) malloc(sizeof(int) * caverna->tam.Y);
-        caverna->MatrixVisitados[i] = (bool*) malloc(sizeof(bool) * caverna->tam.Y);
+    int tamanhoTotal = caverna->tam.linha * caverna->tam.coluna;
+
+    caverna->Matrix[0] = (int*)malloc(sizeof(int) * tamanhoTotal);
+    caverna->MatrixDinamica[0] = (int*)malloc(sizeof(int) * tamanhoTotal);
+    caverna->MatrixVisitados[0] = (bool*)malloc(sizeof(bool) * tamanhoTotal);
+    for (int j = 0; j < caverna->tam.coluna; j++){
+            caverna->MatrixVisitados[0][j] = false;
+        }
+
+    for (int i = 1; i < caverna->tam.linha; i++) {
+        caverna->Matrix[i] = caverna->Matrix[0] + i * caverna->tam.coluna;
+        caverna->MatrixDinamica[i] = caverna->MatrixDinamica[0] + i * caverna->tam.coluna;
+        caverna->MatrixVisitados[i] = caverna->MatrixVisitados[0] + i * caverna->tam.coluna;
+        for (int j = 0; j < caverna->tam.coluna; j++){
+            caverna->MatrixVisitados[i][j] = false;
+        }
+        
     }
 
-    memset(caverna->MatrixVisitados, false, sizeof(caverna->MatrixVisitados));
+    // memset(caverna->MatrixVisitados, false, sizeof(caverna->MatrixVisitados));
+    
+    // for (int i = 0; i < caverna->tam.linha; i++)
+    //     for (int j = 0; j < caverna->tam.coluna; j++)
+    //         caverna->MatrixVisitados[i][j] = false;
 
-    for(int i = 0; i < caverna->tam.X; i++){
-        for(int j = 0; j < caverna->tam.Y; j++){
+    // mostrarMatrix(caverna);
+
+    
+
+    for(int i = 0; i < caverna->tam.linha; i++){
+        for(int j = 0; j < caverna->tam.coluna; j++){
             
             if (fscanf(f, "%d", &readInt) == 1)
                 caverna->Matrix[i][j] = readInt;
@@ -142,13 +185,13 @@ PCaverna geradorCaverna(FILE* f){
                 if(fscanf(f, "%c", &readChar) == 1 & (readChar == 'I' || readChar == 'F')){
                     
                     if (readChar == 'I'){
-                        caverna->entrada.X = i;
-                        caverna->entrada.Y = j;
+                        caverna->entrada.linha = i;
+                        caverna->entrada.coluna = j;
                     }
 
                     else if (readChar == 'F'){
-                        caverna->saida.X = i;
-                        caverna->saida.Y = j;
+                        caverna->saida.linha = i;
+                        caverna->saida.coluna = j;
                     }
 
                     caverna->Matrix[i][j] = 0;
@@ -161,9 +204,14 @@ PCaverna geradorCaverna(FILE* f){
 }
 
 void limparCaverna(PCaverna caverna){
-    for(int i = 0; i < caverna->tam.X; i++)
+    for(int i = 0; i < caverna->tam.linha; i++){
         free(caverna->Matrix[i]);
+        free(caverna->MatrixDinamica[i]);
+        free(caverna->MatrixVisitados[i]);
+    }
     
     free(caverna->Matrix);
+    free(caverna->MatrixDinamica);
+    free(caverna->MatrixVisitados);
     free(caverna);
 }

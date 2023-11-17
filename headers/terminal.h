@@ -1,4 +1,4 @@
-#include "./caverna.h"
+#include "./progDinamica.h"
 
 void lerSelecao(int Selecao[10], int* quantidadeCavernas);
 

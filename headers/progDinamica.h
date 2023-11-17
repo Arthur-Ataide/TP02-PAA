@@ -1,13 +1,16 @@
 #include "./caverna.h"
 
-typedef struct PilhaParOrdenado* PPilhaParOrdenado;
-typedef struct PilhaParOrdenado{
-    PParOrdenado pilha;
-} PilhaParOrdenado;
+typedef struct TipoProgDinamica* PProgDinamica;
+typedef struct TipoProgDinamica{
+    PParOrdenado vetParOrdenado;
+    PCaverna caverna;
+} TipoProgDinamica;
 
 void teste();
 
-void verificaPosicaoInicialFinal(PCaverna caverna);
+PParOrdenado criarVetorParOrdenado(PCaverna caverna);
+
+bool verificaPosicaoInicialFinal(PCaverna caverna);
 
 int maximo(int a, int b);
 
@@ -15,4 +18,4 @@ void programacaoDinamica(PCaverna caverna);
 
 void escreverCaminho(FILE * file, int i, int j);
 
-void Caminho(PCaverna caverna, ParOrdenado* caminho);
+void descobreCaminho(PCaverna caverna, PProgDinamica programa);
