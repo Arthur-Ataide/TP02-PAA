@@ -7,20 +7,18 @@ typedef struct TipoProgDinamica{
     PCaverna caverna;
 } TipoProgDinamica;
 
-void teste();
+void criarVetorParOrdenado(PProgDinamica programa); // malloc vetor de pares ordenados
 
-void criarVetorParOrdenado(PProgDinamica programa);
+bool verificaPosicaoInicialFinal(PCaverna caverna); // verifica se a posicao inicial e final sao validas (a inicial tem q ser depois que a final na linha e na coluna)
 
-bool verificaPosicaoInicialFinal(PCaverna caverna);
+int maximo(int a, int b); // verifica a maior entre duas variaveis
 
-int maximo(int a, int b);
+bool programacaoDinamica(PCaverna caverna); // retorna true se existe um caminho e cria as matrizes de programacao dinamica e visitados
 
-bool programacaoDinamica(PCaverna caverna);
+void escreveArquivoSemCaminho(int* numCaverna); // escreve no arquivo de saida que nao existe caminho
 
-void escreveArquivoSemCaminho(int* numCaverna);
+void escreveArquivo(PProgDinamica programa, int* numCaverna); // escreve no arquivo de saida o caminho
 
-void escreveArquivo(PProgDinamica programa, int* numCaverna);
+void descobreCaminho(PProgDinamica programa, int* numCaverna); // descobre o caminho com base na programacaoDinamica e escreve no arquivo de saida
 
-void descobreCaminho(PProgDinamica programa, int* numCaverna);
-
-void limparVetParOrdenado(PParOrdenado vetParOrdenado);
+void limparVetParOrdenado(PParOrdenado vetParOrdenado); // libera o vetor de pares ordenados

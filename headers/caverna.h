@@ -18,24 +18,17 @@ typedef struct TipoCaverna{
     bool** MatrixVisitados;
 }TipoCaverna;
 
-void teste();
+// Funcoes de modelagem do problema
+// void teste();                                    // Funcao de teste para identificar erros
+// void linha(int tam, bool poder);                 // Funcao que imprime uma linha de tamanho tam colorida
+// void coluna(int tam, bool poder);                // Funcao que imprime uma coluna de tamanho tam colorida
+// void mostrarAtributos(PCaverna caverna);         // Funcao que imprime os atributos da caverna
+// void grafico(char identificador, char bloco);    // Funcao que imprime um bloco de tamanho 1x1 colorido dependendo do identificador
+// void mostrarCaverna(PCaverna caverna);           // Funcao que imprime a caverna
+// void mostrarMatrix(PCaverna caverna);            // Funcao que imprime matrix visitados e matrix dinamica
 
-void mostrarAtributos(PCaverna caverna);
+void atributos(FILE *f, PCaverna caverna); // Leitura dos atributos da caverna
 
-void linha(int tam, bool poder);
+PCaverna geradorCaverna(FILE* f); // da malloc nas matrizes e recebe a caverna a colocando no tad TipoCaverna
 
-void coluna(int tam, bool poder);
-
-//Funcoes de modelagem do problema
-//void grafico(char identificador, char bloco);
-//void mostrarCaverna(PCaverna caverna);
-//void mostrarMatrix(PCaverna caverna);
-//void printAtributos(PCaverna caverna);
-
-void atributos(FILE *f, PCaverna caverna);
-
-PCaverna geradorCaverna(FILE* f);
-
-PCaverna geradorCavernaAleatoria();
-
-void limparCaverna(PCaverna caverna);
+void limparCaverna(PCaverna caverna); // libera as matrizes da caverna

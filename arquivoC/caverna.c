@@ -1,33 +1,37 @@
 #include "../headers/caverna.h"
 
 
+// Utizamos para modelagem do problema as seguintes funcoes comentadas...
 
-void linha(int tam, bool poder){
+// void teste(){ // so para testar onde esta o erro
+//     printf("\n\nteste\n\n");
+// }
 
-    for (int i = 0; i < 2*(tam)+2; i++) {
+// void linha(int tam, bool poder){
 
-        if (poder){
-            printf("\033[46m  \033[0m");
-        }
-        else
-            printf("\033[41m  \033[0m");
+//     for (int i = 0; i < 2*(tam)+2; i++) {
+
+//         if (poder){
+//             printf("\033[46m  \033[0m");
+//         }
+//         else
+//             printf("\033[41m  \033[0m");
         
-    }
+//     }
 
-    puts("");
-}
+//     puts("");
+// }
 
-void coluna(int tam, bool poder){
+// void coluna(int tam, bool poder){
     
-    if (poder){
-        printf("\033[46m  \033[0m");
-    }
-    else 
-        printf("\033[41m  \033[0m");
+//     if (poder){
+//         printf("\033[46m  \033[0m");
+//     }
+//     else 
+//         printf("\033[41m  \033[0m");
 
-}
+// }
 
-//Utizamos para modelagem do problema as seguintes funcoes comentadas...
 
 // void mostrarAtributos(PCaverna caverna){
 //     puts("\nAtributos da caverna:");
@@ -130,10 +134,6 @@ void coluna(int tam, bool poder){
 //         }
 //         puts("");
 //     }
-// }
-
-// void teste(){ // so para testar onde esta o erro
-//     printf("\n\nteste\n\n");
 // }
 
 void atributos(FILE *f, PCaverna caverna){
