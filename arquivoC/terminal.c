@@ -67,7 +67,7 @@ void menu(){
         programa.caverna = geradorCaverna(fileCaverna);
 
         fclose(fileCaverna);
-
+        
         cavernaCriada = true;
         caminhoPossivel = verificaPosicaoInicialFinal(programa.caverna);
 
