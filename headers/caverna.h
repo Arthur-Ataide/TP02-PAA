@@ -18,6 +18,8 @@ typedef struct TipoCaverna{
     bool** MatrixVisitados;
 }TipoCaverna;
 
+void teste();
+
 void mostrarAtributos(PCaverna caverna);
 
 void linha(int tam, bool poder);

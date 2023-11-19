@@ -62,13 +62,14 @@ void menu(){
     FILE* fileCaverna;
     TipoProgDinamica programa;
     int Selecao[10];
+    bool caminhoPossivel;
     int quantidadeCavernas = 0;
     bool cavernaCriada = false;
+
 
     lerSelecao(Selecao, &quantidadeCavernas);
 
     for (int i = 0; i < quantidadeCavernas; i++){
-                
         abrirCaverna(&fileCaverna, Selecao[i]);
 
         programa.caverna = geradorCaverna(fileCaverna);
@@ -78,114 +79,24 @@ void menu(){
         programa.vetParOrdenado = criarVetorParOrdenado(programa.caverna);
 
         cavernaCriada = true;
+        caminhoPossivel = verificaPosicaoInicialFinal(programa.caverna);
 
-        if(verificaPosicaoInicialFinal(programa.caverna)){
-            programacaoDinamica(programa.caverna);
-            mostrarMatrix(programa.caverna);
+        if(caminhoPossivel){
+            caminhoPossivel = programacaoDinamica(programa.caverna);
+            
+
+            if(caminhoPossivel)
+                printf("\nCaminho possivel\n");
+
+            else
+                printf("\nNao existe caminho possivel\n");
+            
             limparCaverna(programa.caverna);
-
         }
 
-        else{
+        else
             printf("\nNao existe caminho possivel\n");
-        }
-
-        // pausarLimparTela();
-
+        
     }
 
-    
-        
-    // exit(0);
-    
-
-    // while (opcao){
-
-    //     // printar menu
-
-        // printf("\n1 - Ler arquivo e gerar mapa\n2 - Gerar mapa aleatorio\n3 - Printar atributos do mapa\n4 - Printar mapa\n5 - Achar o menor caminho\n/* 6 - Tentar achar algum caminho possivel sozinho*/\n0 - Sair\n");
-        
-    //     scanf("%d", &opcao);
-    //     limparTela();
-
-    //     switch (opcao){
-
-    //         case 1:
-    //             // if (caminhosJaVistos)
-    //             //     freeCaminhos(map->caminhosPossiveis->proxCaminho);
-
-    //             if (cavernaCriada)
-    //                 limparCaverna(caverna);
-                
-    //             lerArquivo(&f);
-
-    //             caverna = geradorCaverna(f);
-    //             // generateRec(&rec);
-
-    //             fclose(f);
-                
-    //             cavernaCriada = 1;
-    //             caminhosJaVistos = 0;
-    //             break;
-            
-            // case 2:
-            //     limparInput();
-                
-            //     // if (caminhosJaVistos)
-            //     //     freeCaminhos(map->caminhosPossiveis->proxCaminho);
-
-            //     if (cavernaCriada)
-            //         freeCaverna(caverna);
-        
-            //     caverna = generateCavernaAleatoria();
-            //     // generateRec(&rec);
-            //     // printf("\nMapa aleatorio foi gerado, para ver seus atributos selecione 3\n");
-            //     cavernaCriada = 1;
-            //     caminhosJaVistos = 0;
-            //     break;
-
-    //         case 3:
-    //             if(cavernaCriada){
-    //                 mostrarAtributos(caverna);
-    //                 break;
-    //             }
-
-    //         case 4:
-    //             if(cavernaCriada){
-    //                 mostrarCaverna(caverna);
-    //                 break;
-    //             }
-
-    //         // case 5:
-    //         //     if(cavernaCriada){
-    //         //         procurarCaminho(caverna->Matrix);
-    //         //         break;
-    //         //     }
-
-    //         // case 6:
-    //         //     if(mapCriado){
-    //         //         chaminharUsuario(map);
-    //         //         break;
-    //         //     }
-
-    //         default:
-    //             printf("Opcao invalida. Tente novamente.\n");
-    //             break;
-
-    //         case 0:
-                // if (caminhosJaVistos)
-                //     freeCaminhos(map->caminhosPossiveis->proxCaminho);
-
-                // if (cavernaCriada)
-                //     limparCaverna(caverna);
-                
-                // // endwin();
-
-                // exit(0);
-                    
-            
-    //     }
-    //     pausarLimparTela();
-    // }
-    
 }

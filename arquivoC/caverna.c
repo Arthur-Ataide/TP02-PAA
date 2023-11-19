@@ -1,5 +1,9 @@
 #include "../headers/caverna.h"
 
+void teste(){ // so para testar onde esta o erro
+    printf("\n\nteste\n\n");
+}
+
 void mostrarAtributos(PCaverna caverna){
     puts("\nAtributos da caverna:");
     printf("Tamanho: %d %d\n", caverna->tam.linha, caverna->tam.coluna);
@@ -161,6 +165,7 @@ PCaverna geradorCaverna(FILE* f){
         caverna->MatrixVisitados[i] = caverna->MatrixVisitados[0] + i * caverna->tam.coluna;
         for (int j = 0; j < caverna->tam.coluna; j++){
             caverna->MatrixVisitados[i][j] = false;
+            caverna->MatrixDinamica[i][j] = 0;
         }
         
     }
@@ -172,6 +177,7 @@ PCaverna geradorCaverna(FILE* f){
     //         caverna->MatrixVisitados[i][j] = false;
 
     // mostrarMatrix(caverna);
+    // pausarLimparTela();
 
     
 
@@ -204,6 +210,7 @@ PCaverna geradorCaverna(FILE* f){
 }
 
 void limparCaverna(PCaverna caverna){
+    
     for(int i = 0; i < caverna->tam.linha; i++){
         free(caverna->Matrix[i]);
         free(caverna->MatrixDinamica[i]);
