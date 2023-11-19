@@ -141,6 +141,7 @@ void atributos(FILE *f, PCaverna caverna){
     fscanf(f, "%d", &(caverna->vida));
 }
 
+//O famoso gera caverna
 PCaverna geradorCaverna(FILE* f){
     int readInt;
     char readChar;
@@ -166,18 +167,7 @@ PCaverna geradorCaverna(FILE* f){
             caverna->MatrixDinamica[i][j] = 0;
         }
         
-    }
-
-    // memset(caverna->MatrixVisitados, false, sizeof(caverna->MatrixVisitados));
-    
-    // for (int i = 0; i < caverna->tam.linha; i++)
-    //     for (int j = 0; j < caverna->tam.coluna; j++)
-    //         caverna->MatrixVisitados[i][j] = false;
-
-    // mostrarMatrix(caverna);
-    // pausarLimparTela();
-
-    
+    }  
 
     for(int i = 0; i < caverna->tam.linha; i++){
         for(int j = 0; j < caverna->tam.coluna; j++){
