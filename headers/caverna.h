@@ -26,18 +26,16 @@ void linha(int tam, bool poder);
 
 void coluna(int tam, bool poder);
 
-void grafico(char identificador, char bloco);
-
-void mostrarCaverna(PCaverna caverna);
-
-void mostrarMatrix(PCaverna caverna);
+//Funcoes de modelagem do problema
+//void grafico(char identificador, char bloco);
+//void mostrarCaverna(PCaverna caverna);
+//void mostrarMatrix(PCaverna caverna);
+//void printAtributos(PCaverna caverna);
 
 void atributos(FILE *f, PCaverna caverna);
 
 PCaverna geradorCaverna(FILE* f);
 
 PCaverna geradorCavernaAleatoria();
-
-void printAtributos(PCaverna caverna);
 
 void limparCaverna(PCaverna caverna);
