@@ -2,13 +2,14 @@
 
 typedef struct TipoProgDinamica* PProgDinamica;
 typedef struct TipoProgDinamica{
+    int tamCaminho;
     PParOrdenado vetParOrdenado;
     PCaverna caverna;
 } TipoProgDinamica;
 
 void teste();
 
-PParOrdenado criarVetorParOrdenado(PCaverna caverna);
+void criarVetorParOrdenado(PProgDinamica programa);
 
 bool verificaPosicaoInicialFinal(PCaverna caverna);
 
@@ -16,6 +17,6 @@ int maximo(int a, int b);
 
 bool programacaoDinamica(PCaverna caverna);
 
-void escreverCaminho(FILE * file, int i, int j);
+void escreveArquivo(PProgDinamica programa);
 
-void descobreCaminho(PCaverna caverna, PProgDinamica programa);
+void descobreCaminho(PProgDinamica programa);

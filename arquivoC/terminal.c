@@ -76,17 +76,15 @@ void menu(){
 
         fclose(fileCaverna);
 
-        programa.vetParOrdenado = criarVetorParOrdenado(programa.caverna);
-
         cavernaCriada = true;
         caminhoPossivel = verificaPosicaoInicialFinal(programa.caverna);
 
         if(caminhoPossivel){
             caminhoPossivel = programacaoDinamica(programa.caverna);
             
-
-            if(caminhoPossivel)
-                printf("\nCaminho possivel\n");
+            if(caminhoPossivel){
+                descobreCaminho(&programa);
+            }
 
             else
                 printf("\nNao existe caminho possivel\n");

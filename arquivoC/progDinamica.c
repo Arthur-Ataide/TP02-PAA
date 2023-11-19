@@ -1,7 +1,11 @@
 #include "../headers/progDinamica.h"
 
-PParOrdenado criarVetorParOrdenado(PCaverna caverna){
-    return ((PParOrdenado)malloc(sizeof(TipoParOrdenado) * ((caverna->entrada.linha - caverna->saida.linha) + (caverna->entrada.coluna - caverna->saida.coluna))));
+void criarVetorParOrdenado(PProgDinamica programa){
+
+    programa->tamCaminho = ((programa->caverna->entrada.linha - programa->caverna->saida.linha) + (programa->caverna->entrada.coluna - programa->caverna->saida.coluna));
+
+    programa->vetParOrdenado = ((PParOrdenado)malloc(sizeof(TipoParOrdenado) * programa->tamCaminho));
+
 }
 
 bool verificaPosicaoInicialFinal(PCaverna caverna){
@@ -83,63 +87,46 @@ bool programacaoDinamica(PCaverna caverna){
     return false;
 }
 
-// void escreverCaminho(FILE * file, int i, int j) {
-//     char buffer[] = {i, ' ', j, '\n'};
-//     fwrite(buffer, 1, sizeof(buffer), file);
-// }
+void escreveArquivo(PProgDinamica programa) {
+    FILE* file;
+    file = fopen("./arquivosResultados/resultado.txt", "w");
 
-// void Caminho(PCaverna caverna, PProgDinamica programa){ // descobrir o caminho
-//     FILE * file;
-//     file = fopen("./arquivosResultados/resultado.txt", "w");
-//     int linha, coluna;
+    for (int i = programa->tamCaminho; i >= 0; i--)
+        fprintf(file, "%d %d\n", programa->vetParOrdenado[i].linha, programa->vetParOrdenado[i].coluna);
 
-//     // (*caminho)[i].linha = começa salvando pela entrada ou pela saida
-//     // (*caminho)[i].coluna =
+    // fprintf(file, "%d %d\n", programa->, programa->vetParOrdenado[i].coluna);
+    fclose(file);
+}
 
-//     caverna.MatrixDinamica[caverna.entrada.linha][caverna.entrada.coluna] = true;
+void descobreCaminho(PProgDinamica programa){ // descobrir o caminho
 
-//     for (int i = caverna->entrada.linha; i < caverna->saida.linha; i--){
-//         for (int j = caverna->entrada.coluna; j >= caverna->saida.coluna; j--){
-//             if ((i > caverna->entrada.linha) && (caverna->MatrixDinamica[i][j] == true)){
+    criarVetorParOrdenado(programa);
 
-//                 caverna->MatrixDinamica[i][j] = fmax(caverna->MatrixDinamica[i][j], caverna->MatrixDinamica[i - 1][j]);
-//             }
-//             if (i > caverna->entrada.coluna){
-//                 caverna->MatrixDinamica[i][j] = fmax(caverna->MatrixDinamica[i][j], caverna->MatrixDinamica[i][j - 1]);
-//             }
-//             if (caverna->MatrixDinamica[i-1][j] > caverna->MatrixDinamica[i][j-1]){
-//                 escreverCaminho(file, i-, j);
-//             }
+    TipoParOrdenado saida, entrada;
+    saida.linha = programa->caverna->saida.linha;
+    saida.coluna = programa->caverna->saida.coluna;
+    entrada.linha = programa->caverna->entrada.linha;
+    entrada.coluna = programa->caverna->entrada.coluna;
 
-//             caverna.MatrixDinamica[i][j] += caverna.Matrix[i][j];
-//         }
-//     }
+    int i = saida.linha, j = saida.coluna;
 
-//     int i = caverna.saida.linha;
-//     int j = caverna.saida.coluna;
-//     int k = 0;
+    programa->vetParOrdenado[0].linha = i;         programa->vetParOrdenado[0].coluna = j;
 
-//     while (i != caverna.entrada.linha || j != caverna.entrada.coluna) {
-//         caminho[k].linha = i;
-//         caminho[k].coluna = j;
-//         k++;
+    for (int c = 1; c < programa->tamCaminho; c++){
 
-//         if (i > 0 && caverna.MatrixDinamica[i][j] - caverna.Matrix[i][j] == caverna.MatrixDinamica[i - 1][j]) {
-//             i--;
-//         } else {
-//             j--;
-//         }
-//     }
+        if (programa->caverna->MatrixDinamica[i + 1][j] > programa->caverna->MatrixDinamica[i][j + 1]) {
+            programa->vetParOrdenado[c].linha = i + 1;     programa->vetParOrdenado[c].coluna = j; 
+            i++;
+        }
 
-//     caminho[k].linha = caverna.entrada.linha;
-//     caminho[k].coluna = caverna.entrada.coluna;
+        else{
+            programa->vetParOrdenado[c].linha = i;         programa->vetParOrdenado[c].coluna = j + 1; 
+            j++;
+        }
+    }
 
-//     for (int l = k; l >= 0; l--) {
-//         fprintf(file, "Linha: %d, Coluna: %d\n", caminho[l].linha, caminho[l].coluna);
-//     }
-
-//     fclose(file);
-// }
-//         // void mandarEmailProDaniel(int matricula, char email[50]){
-
-//         // }
+    // escreveArquivo(programa);
+    mostrarMatrix(programa->caverna);
+    for (int i = programa->tamCaminho; i >= 0; i--)
+        printf("%d %d\n", programa->vetParOrdenado[i].linha, programa->vetParOrdenado[i].coluna);
+}
