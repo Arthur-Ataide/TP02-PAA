@@ -152,12 +152,26 @@ PCaverna geradorCaverna(FILE* f){
 
     int tamanhoTotal = caverna->tam.linha * caverna->tam.coluna;
 
+    // for (int i = 0; i < caverna->tam.linha; i++) {
+    //     caverna->Matrix[i] = (int*)malloc(sizeof(int) * caverna->tam.coluna);
+    //     caverna->MatrixDinamica[i] = (int*)malloc(sizeof(int) * caverna->tam.coluna);
+    //     caverna->MatrixVisitados[i] = (bool*)malloc(sizeof(bool) * caverna->tam.coluna);
+        
+    //     for (int j = 0; j < caverna->tam.coluna; j++){
+    //         caverna->MatrixVisitados[i][j] = false;
+    //         caverna->MatrixDinamica[i][j] = 0;
+    //     }
+        
+    // }
+
     caverna->Matrix[0] = (int*)malloc(sizeof(int) * tamanhoTotal);
     caverna->MatrixDinamica[0] = (int*)malloc(sizeof(int) * tamanhoTotal);
     caverna->MatrixVisitados[0] = (bool*)malloc(sizeof(bool) * tamanhoTotal);
     for (int j = 0; j < caverna->tam.coluna; j++){
-            caverna->MatrixVisitados[0][j] = false;
-        }
+        caverna->MatrixVisitados[0][j] = false;
+        caverna->MatrixDinamica[0][j] = 0;
+    }
+
 
     for (int i = 1; i < caverna->tam.linha; i++) {
         caverna->Matrix[i] = caverna->Matrix[0] + i * caverna->tam.coluna;

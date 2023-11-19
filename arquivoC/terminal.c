@@ -26,31 +26,22 @@ void lerSelecao(int Selecao[10], int* quantidadeCavernas){
     
 void abrirCaverna(FILE** f, int numCaverna){
     
-    char file_path[250];
+    char nomeFile[250];
     char ch[2];
     
     do{
-        printf("\nDigite o caminho do arquivo: (apenas o numero da caverna)\n");
-
-        strcpy(file_path, "./cavernaGeradora/");
-        strcat(file_path, "caverna");
+        strcpy(nomeFile, "./cavernaGeradora/caverna");
+        // strcat(nomeFile, "caverna");
 
         sprintf(ch, "%d", numCaverna);
         
-        strcat(file_path, ch);
-        strcat(file_path, ".txt");
+        strcat(nomeFile, ch);
+        strcat(nomeFile, ".txt");
         
-        printf("\nArquivo: %s\n", file_path);
-
-        *f = fopen(file_path, "r");
+        *f = fopen(nomeFile, "r");
 
         if(*f == NULL){
             printf("\nArquivo nao encontrado\n\n");
-            pausarLimparTela();
-        }
-
-        else{
-            printf("\nArquivo encontrado!!!\n\n");
         }
     }
 
@@ -71,6 +62,7 @@ void menu(){
 
     for (int i = 0; i < quantidadeCavernas; i++){
         abrirCaverna(&fileCaverna, Selecao[i]);
+        
 
         programa.caverna = geradorCaverna(fileCaverna);
 
@@ -83,18 +75,18 @@ void menu(){
             caminhoPossivel = programacaoDinamica(programa.caverna);
             
             if(caminhoPossivel){
-                descobreCaminho(&programa);
+                descobreCaminho(&programa, &(Selecao[i]));
+                limparVetParOrdenado(programa.vetParOrdenado);
             }
 
             else
-                printf("\nNao existe caminho possivel\n");
-            
-            limparCaverna(programa.caverna);
+                escreveArquivoSemCaminho(&(Selecao[i]));
         }
 
         else
-            printf("\nNao existe caminho possivel\n");
+            escreveArquivoSemCaminho(&(Selecao[i]));
         
+        limparCaverna(programa.caverna);
     }
 
 }

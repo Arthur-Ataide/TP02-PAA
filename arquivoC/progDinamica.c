@@ -87,18 +87,61 @@ bool programacaoDinamica(PCaverna caverna){
     return false;
 }
 
-void escreveArquivo(PProgDinamica programa) {
+//caminho nao achado escreve arquivo com uma frase
+void escreveArquivoSemCaminho(int* numCaverna){
+    char nomeFile[250];
+    char ch[2];
     FILE* file;
-    file = fopen("./arquivosResultados/resultado.txt", "w");
 
-    for (int i = programa->tamCaminho; i >= 0; i--)
-        fprintf(file, "%d %d\n", programa->vetParOrdenado[i].linha, programa->vetParOrdenado[i].coluna);
+    strcpy(nomeFile, "./arquivosResultados/resultado");
 
-    // fprintf(file, "%d %d\n", programa->, programa->vetParOrdenado[i].coluna);
+    sprintf(ch, "%d", (*numCaverna));
+    
+    strcat(nomeFile, ch);
+    strcat(nomeFile, ".txt");
+    
+    file = fopen(nomeFile, "w");
+
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo %s\n", nomeFile);
+        return;
+    }
+
+    fprintf(file, "Caverna sem caminho possivel\n");
+
+
     fclose(file);
 }
 
-void descobreCaminho(PProgDinamica programa){ // descobrir o caminho
+void escreveArquivo(PProgDinamica programa, int* numCaverna) {
+    char nomeFile[250];
+    char ch[2];
+    FILE* file;
+
+    strcpy(nomeFile, "./arquivosResultados/resultado");
+
+    sprintf(ch, "%d", (*numCaverna));
+    
+    strcat(nomeFile, ch);
+    strcat(nomeFile, ".txt");
+    
+    file = fopen(nomeFile, "w");
+
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo %s\n", nomeFile);
+        return;
+    }
+
+    for (int i = programa->tamCaminho-1; i >= 0; i--){
+        fprintf(file, "%d %d\n", programa->vetParOrdenado[i].linha, programa->vetParOrdenado[i].coluna);
+    }
+
+    fprintf(file, "%d %d\n", programa->caverna->saida.linha, programa->caverna->saida.coluna);
+
+    fclose(file);
+}
+
+void descobreCaminho(PProgDinamica programa, int* numCaverna){ // descobrir o caminho
 
     criarVetorParOrdenado(programa);
 
@@ -109,24 +152,34 @@ void descobreCaminho(PProgDinamica programa){ // descobrir o caminho
     entrada.coluna = programa->caverna->entrada.coluna;
 
     int i = saida.linha, j = saida.coluna;
-
-    programa->vetParOrdenado[0].linha = i;         programa->vetParOrdenado[0].coluna = j;
-
-    for (int c = 1; c < programa->tamCaminho; c++){
-
-        if (programa->caverna->MatrixDinamica[i + 1][j] > programa->caverna->MatrixDinamica[i][j + 1]) {
+    for (int c = 0; c < programa->tamCaminho; c++){
+        
+        if (i+1 <= entrada.linha && j+1 > entrada.coluna){
             programa->vetParOrdenado[c].linha = i + 1;     programa->vetParOrdenado[c].coluna = j; 
             i++;
         }
 
-        else{
+        else if (i+1 > entrada.linha && j+1 <= entrada.coluna){
             programa->vetParOrdenado[c].linha = i;         programa->vetParOrdenado[c].coluna = j + 1; 
             j++;
         }
-    }
 
-    // escreveArquivo(programa);
-    mostrarMatrix(programa->caverna);
-    for (int i = programa->tamCaminho; i >= 0; i--)
-        printf("%d %d\n", programa->vetParOrdenado[i].linha, programa->vetParOrdenado[i].coluna);
+        else if (i+1 <= entrada.linha && j+1 <= entrada.coluna){
+            if (programa->caverna->MatrixDinamica[i + 1][j] > programa->caverna->MatrixDinamica[i][j + 1]) {
+                programa->vetParOrdenado[c].linha = i + 1;     programa->vetParOrdenado[c].coluna = j; 
+                i++;
+            }
+
+            else{
+                programa->vetParOrdenado[c].linha = i;         programa->vetParOrdenado[c].coluna = j + 1; 
+                j++;
+            }
+        }
+    }
+    escreveArquivo(programa, numCaverna);
+    
+}
+
+void limparVetParOrdenado(PParOrdenado vetParOrdenado){
+    free(vetParOrdenado);
 }

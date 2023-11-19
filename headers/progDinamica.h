@@ -17,6 +17,10 @@ int maximo(int a, int b);
 
 bool programacaoDinamica(PCaverna caverna);
 
-void escreveArquivo(PProgDinamica programa);
+void escreveArquivoSemCaminho(int* numCaverna);
 
-void descobreCaminho(PProgDinamica programa);
+void escreveArquivo(PProgDinamica programa, int* numCaverna);
+
+void descobreCaminho(PProgDinamica programa, int* numCaverna);
+
+void limparVetParOrdenado(PParOrdenado vetParOrdenado);
