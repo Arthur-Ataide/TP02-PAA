@@ -2,7 +2,7 @@
 
 void lerSelecao(int Selecao[10], int* quantidadeCavernas){
     char file_path[250];
-    char ch[2];
+    char ch[5];
     *quantidadeCavernas = 0;
 
     FILE* f = fopen("./selecaoDeCavernas/selecao.txt", "r");
@@ -27,7 +27,7 @@ void lerSelecao(int Selecao[10], int* quantidadeCavernas){
 void abrirCaverna(FILE** f, int numCaverna){
     
     char nomeFile[250];
-    char ch[2];
+    char ch[5];
     
     do{
         strcpy(nomeFile, "./cavernaGeradora/caverna");
@@ -52,7 +52,7 @@ void menu(){
 
     FILE* fileCaverna;
     TipoProgDinamica programa;
-    int Selecao[10];
+    int Selecao[30];
     bool caminhoPossivel;
     int quantidadeCavernas = 0;
     bool cavernaCriada = false;

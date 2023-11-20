@@ -36,10 +36,10 @@ bool programacaoDinamica(PCaverna caverna){
                 atual = caverna->vida;
             }
 
-            else if (i == entrada.linha && j != entrada.coluna){
+            else if (i == entrada.linha && j != entrada.coluna){ 
                 atual = caverna->MatrixDinamica[i][j + 1] + caverna->Matrix[i][j];
 
-                if (atual < 0){
+                if (atual < 0){ // pular a linha inteira para economizar tempo
                     break;
                 }
             }
@@ -51,33 +51,25 @@ bool programacaoDinamica(PCaverna caverna){
                         entrada.coluna--;
                     }
                 }
-
                 else{
-                    entrada.coluna--;
+                    entrada.coluna--; // reduz o escopo da matriz sendo que seria impossivel chegar nas posiçoes "excluidas" economizando mais tempo
                 }
-
             }
-
             else{
                 if (caverna->MatrixVisitados[i + 1][j] == true){
-                    if (caverna->MatrixVisitados[i][j + 1] == true){
+                    if (caverna->MatrixVisitados[i][j + 1] == true){ // utilizar da matrizvsitados para saber se a posiçao ja foi visitada e assim economizar tempo
                         atual = maximo(caverna->MatrixDinamica[i + 1][j], caverna->MatrixDinamica[i][j + 1]) + caverna->Matrix[i][j];
                     }
                     else
                         atual = caverna->MatrixDinamica[i + 1][j] + caverna->Matrix[i][j];
                 }
-
                 else if (caverna->MatrixVisitados[i][j + 1] == true)
                     atual = caverna->MatrixDinamica[i][j + 1] + caverna->Matrix[i][j];
             }
-
             if (atual > 0){
                 caverna->MatrixDinamica[i][j] = atual;
                 caverna->MatrixVisitados[i][j] = true;
             }
-
-
-            
         }
     }
     if(caverna->MatrixVisitados[caverna->saida.linha][caverna->saida.coluna]){
@@ -90,7 +82,7 @@ bool programacaoDinamica(PCaverna caverna){
 //caminho nao achado escreve arquivo com uma frase
 void escreveArquivoSemCaminho(int* numCaverna){
     char nomeFile[250];
-    char ch[2];
+    char ch[5];
     FILE* file;
 
     strcpy(nomeFile, "./arquivosResultados/resultado");
@@ -115,7 +107,7 @@ void escreveArquivoSemCaminho(int* numCaverna){
 
 void escreveArquivo(PProgDinamica programa, int* numCaverna) {
     char nomeFile[250];
-    char ch[2];
+    char ch[5];
     FILE* file;
 
     strcpy(nomeFile, "./arquivosResultados/resultado");
